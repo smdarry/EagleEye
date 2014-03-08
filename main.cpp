@@ -20,6 +20,8 @@ int main(int argc, char *argv[])
     w.show();
 
     CannyFilter cannyFilter;
+    cannyFilter.setLowThreshold(50);
+    cannyFilter.setHighThreshold(100);
     TextDetectElement textDetect;
 
     videoSrc.addPushListener(cannyFilter);

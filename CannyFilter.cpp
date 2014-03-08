@@ -7,6 +7,16 @@ CannyFilter::CannyFilter()
 {
 }
 
+void CannyFilter::setLowThreshold(float lowThreshold)
+{
+    _lowThreshold = lowThreshold;
+}
+
+void CannyFilter::setHighThreshold(float highThreshold)
+{
+    _highThreshold = highThreshold;
+}
+
 void CannyFilter::onPush(Mat &frame)
 {
     // Convert to grayscale
@@ -14,10 +24,8 @@ void CannyFilter::onPush(Mat &frame)
     cvtColor(frame, grayImage, CV_RGB2GRAY);
 
     // Create Canny Image
-    double threshold_low = 50;
-    double threshold_high = 50;
     Mat edgeImage;
-    Canny(grayImage, edgeImage, threshold_low, threshold_high, 3);
+    Canny(grayImage, edgeImage, _lowThreshold, _highThreshold, 3);
 
     notify(edgeImage);
 }
