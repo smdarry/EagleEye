@@ -2,7 +2,10 @@
 #include <QApplication>
 #include <QDebug>
 
-#include "videosource.h"
+#include "VideoSource.h"
+#include "CannyFilter.h"
+#include "TextDetectElement.h"
+
 #include "opencv2/core/core.hpp"
 
 using namespace cv;
@@ -16,7 +19,13 @@ int main(int argc, char *argv[])
     CameraWindow w;
     w.show();
 
-    videoSrc.addPushListener(w);
+    CannyFilter cannyFilter;
+    TextDetectElement textDetect;
+
+    videoSrc.addPushListener(cannyFilter);
+    cannyFilter.addPushListener(textDetect);
+    textDetect.addPushListener(w);
+
     videoSrc.start();
 
     return a.exec();

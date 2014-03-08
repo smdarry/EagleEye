@@ -16,14 +16,18 @@ SOURCES += main.cpp\
         QOpenCVWidget.cpp \
     Buffer.cpp \
     CameraWindow.cpp \
-    VideoSource.cpp
+    VideoSource.cpp \
+    TextDetectElement.cpp \
+    CannyFilter.cpp
 
 HEADERS  +=\
             QOpenCVWidget.h \
     BaseElement.h \
     Buffer.h \
     VideoSource.h \
-    CameraWindow.h
+    CameraWindow.h \
+    TextDetectElement.h \
+    CannyFilter.h
 
 INCLUDEPATH += C:\\opencv2.4.8\\Release\\install\\include
 
