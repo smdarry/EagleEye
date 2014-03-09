@@ -69,10 +69,12 @@ void TextDetectElement::onPush(Mat &frame)
                 new_y = (int)floor(new_y + grad_p.y() * alpha);
 
                 // Check if we go beyond image's bounds
-                if(new_x >= frame.cols || new_y >= frame.rows)
+                if(new_x >= frame.cols || new_y >= frame.rows ||
+                    new_x < 0 || new_y < 0)
+                {
                     isOutOfBounds = true;
-                if(new_x < 0 || new_y < 0)
-                    isOutOfBounds = true;
+                    break;
+                }
 
                 // Get pixel intensity at new position
                 new_p_i = frame.at<uchar>(new_y, new_x);
@@ -97,12 +99,10 @@ void TextDetectElement::onPush(Mat &frame)
             {
                 QLine ray(p, q);
                 listOfRays.append(ray);
-                //qDebug() << "DOT product between q and p:" << dotProduct;
             }
         }
     }
 
-    // Draw the rays found
     QLinkedList<QLine>::Iterator it;
     for(it = listOfRays.begin(); it != listOfRays.end(); ++it)
     {
