@@ -17,7 +17,7 @@ void CannyFilter::setHighThreshold(float highThreshold)
     _highThreshold = highThreshold;
 }
 
-void CannyFilter::onPush(Mat &frame)
+void CannyFilter::onPushRawFrame(Mat &frame)
 {
     // Convert to grayscale
     Mat grayImage;
@@ -27,5 +27,5 @@ void CannyFilter::onPush(Mat &frame)
     Mat edgeImage;
     Canny(grayImage, edgeImage, _lowThreshold, _highThreshold, 3);
 
-    notify(edgeImage);
+    emit pushEdgeImage(edgeImage);
 }

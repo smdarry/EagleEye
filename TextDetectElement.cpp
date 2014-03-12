@@ -2,16 +2,21 @@
 
 #include <QDebug>
 #include <QLine>
+#include <QLinkedList>
 #include <QVector2D>
 
-#include "opencv2/core/core.hpp"
-#include "opencv2/imgproc/imgproc.hpp"
+#include <opencv2/imgproc/imgproc.hpp>
 
 TextDetectElement::TextDetectElement()
 {
 }
 
-void TextDetectElement::onPush(Mat &frame)
+void TextDetectElement::onPushRawFrame(Mat &frame)
+{
+    Q_UNUSED(frame);
+}
+
+void TextDetectElement::onPushEdgeImage(Mat &frame)
 {
     int scale = 1;
     int delta = 0;
@@ -103,15 +108,15 @@ void TextDetectElement::onPush(Mat &frame)
         }
     }
 
-    QLinkedList<QLine>::Iterator it;
-    for(it = listOfRays.begin(); it != listOfRays.end(); ++it)
-    {
-        QLine line = (*it);
-        cv::Point p1(line.x1(), line.y1());
-        cv::Point p2(line.x2(), line.y2());
+//    QLinkedList<QLine>::Iterator it;
+//    for(it = listOfRays.begin(); it != listOfRays.end(); ++it)
+//    {
+//        QLine line = (*it);
+//        cv::Point p1(line.x1(), line.y1());
+//        cv::Point p2(line.x2(), line.y2());
 
-        cv::line(frame, p1, p2, CV_RGB(0, 255, 0), 1, 8, 0);
-    }
+//        cv::line(frame, p1, p2, CV_RGB(0, 255, 0), 1, 8, 0);
+//    }
 
-    notify(frame);
+    emit pushResultImage(frame);
 }

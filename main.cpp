@@ -24,9 +24,14 @@ int main(int argc, char *argv[])
     cannyFilter.setHighThreshold(100);
     TextDetectElement textDetect;
 
-    videoSrc.addPushListener(cannyFilter);
-    cannyFilter.addPushListener(textDetect);
-    textDetect.addPushListener(w);
+    QObject::connect(&videoSrc, SIGNAL(pushRawFrame(Mat&)), &cannyFilter, SLOT(onPushRawFrame(Mat&)));
+    QObject::connect(&videoSrc, SIGNAL(pushRawFrame(Mat&)), &textDetect, SLOT(onPushRawFrame(Mat&)));
+    QObject::connect(&cannyFilter, SIGNAL(pushEdgeImage(Mat&)), &textDetect, SLOT(onPushEdgeImage(Mat&)));
+    QObject::connect(&textDetect, SIGNAL(pushResultImage(Mat&)), &w, SLOT(onPushImage(Mat&)));
+
+//    videoSrc.addPushListener(cannyFilter);
+//    cannyFilter.addPushListener(textDetect);
+//    textDetect.addPushListener(w);
 
     videoSrc.start();
 

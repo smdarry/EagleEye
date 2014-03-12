@@ -3,8 +3,12 @@
 
 #include "VideoSource.h"
 
-class CannyFilter : public BaseElement<Mat>, public PushVideoListener
+using namespace cv;
+
+class CannyFilter : public QObject
 {
+    Q_OBJECT
+
 private:
     float _lowThreshold;
     float _highThreshold;
@@ -15,7 +19,11 @@ public:
     void setLowThreshold(float lowThreshold);
     void setHighThreshold(float highThreshold);
 
-    virtual void onPush(Mat& frame);
+signals:
+    void pushEdgeImage(Mat&);
+
+public slots:
+    void onPushRawFrame(Mat&);
 };
 
 #endif // CANNYFILTER_H

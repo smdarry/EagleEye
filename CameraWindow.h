@@ -9,7 +9,9 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
-class CameraWindow : public QWidget, public PushVideoListener
+using namespace cv;
+
+class CameraWindow : public QWidget
 {
     Q_OBJECT
 private:
@@ -17,12 +19,11 @@ private:
 
 public:
     explicit CameraWindow(QWidget *parent = 0);
-    virtual void onPush(Mat& buffer);
 
 signals:
 
 public slots:
-
+    void onPushImage(Mat&);
 };
 
 #endif // CAMERAWINDOW_H

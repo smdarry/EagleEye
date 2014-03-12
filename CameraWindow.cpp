@@ -13,7 +13,7 @@ CameraWindow::CameraWindow(QWidget *parent) :
     resize(500, 400);
 }
 
-void CameraWindow::onPush(Mat& buffer)
+void CameraWindow::onPushImage(Mat &image)
 {
-    _cvwidget->putImage(buffer);
+    _cvwidget->putImage(image);
 }

@@ -1,8 +1,6 @@
 #ifndef VIDEOSOURCE_H
 #define VIDEOSOURCE_H
 
-#include "baseelement.h"
-
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
@@ -10,10 +8,9 @@
 
 using namespace cv;
 
-typedef BaseElement<Mat>::PushListener PushVideoListener;
-
-class VideoSource : public BaseElement<Mat>, public QObject
+class VideoSource : public QObject
 {
+    Q_OBJECT
 private:
     VideoCapture* _camera;
 
@@ -26,6 +23,9 @@ public:
 
 protected:
     void timerEvent(QTimerEvent *);
+
+signals:
+    void pushRawFrame(Mat&);
 };
 
 #endif // VIDEOSOURCE_H

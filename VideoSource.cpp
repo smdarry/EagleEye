@@ -31,5 +31,7 @@ void VideoSource::timerEvent(QTimerEvent *)
     Mat frame;
     _camera->read(frame);
 
-    notify(frame);
+//    notify(frame);
+
+    emit pushRawFrame(frame);
 }

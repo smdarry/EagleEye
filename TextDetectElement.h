@@ -1,15 +1,25 @@
 #ifndef TEXTDETECTELEMENT_H
 #define TEXTDETECTELEMENT_H
 
-#include "BaseElement.h"
-#include "VideoSource.h"
+#include <QObject>
 
-class TextDetectElement : public BaseElement<Mat>, public PushVideoListener
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+
+using namespace cv;
+
+class TextDetectElement : public QObject
 {
+    Q_OBJECT
 public:
     TextDetectElement();
 
-    virtual void onPush(Mat& frame);
+signals:
+    void pushResultImage(Mat& image);
+
+public slots:
+    void onPushRawFrame(Mat& frame);
+    void onPushEdgeImage(Mat& frame);
 };
 
 #endif // TEXTDETECTELEMENT_H
